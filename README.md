@@ -89,6 +89,34 @@ F16:: {  ; Y-
 
 ---
 
+## Dependências
+
+### Software Necessário
+- [Arduino IDE 2.3.6 ou superior](https://www.arduino.cc/en/software)  
+
+### Bibliotecas do Arduino
+Todas estas bibliotecas estão incluídas por padrão na Arduino IDE:
+- **Wire.h** - Para comunicação I2C com o sensor
+- **Keyboard.h** - Para emulação de teclado
+
+Biblioteca adicional necessária:
+1. [MPU6050_light.h](https://github.com/rfetick/MPU6050_light)  
+   Biblioteca específica para o sensor MPU-6050. Instale via:
+   - **Gerenciador de Bibliotecas:** (busque por `MPU6050_light`)
+
+---
+
+### Guia de Instalação
+
+#### Instalação da Biblioteca MPU6050_light:
+
+**Pelo Arduino IDE (Recomendado):**
+1. Abra o Arduino IDE
+2. Vá em **Sketch > Incluir Biblioteca > Gerenciar Bibliotecas...**
+3. Busque por `MPU6050_light` e clique em **Instalar**
+
+---
+
 ## Equipe
 
 **G13:**
