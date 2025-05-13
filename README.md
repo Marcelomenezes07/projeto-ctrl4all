@@ -131,3 +131,16 @@ Biblioteca adicional necessária:
 - Maria Bertholine Rêgo Barros Simões  
 - Rafael Chiappetta Barboza  
 
+## Licença
+
+Este projeto está licenciado sob a **Licença Apache 2.0**. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+### Direitos Autorais
+
+Copyright 2025 **Arthur Sindeaux de Araújo Nogueira, Estêvão Queiroz dos Santos, Igor Moura Nunes, Marcelo Asfora de Menezes, Marina de Queiróz Negromonte, Caio Leon Almeida Andrade Michalewicz, Humberto Mota de Lima, Maria Bertholine Rêgo Barros Simões, Rafael Chiappetta Barboza**
+
+Licenciado sob a Licença Apache, Versão 2.0 (a "Licença"); você não pode usar este arquivo, exceto em conformidade com a Licença. Você pode obter uma cópia da Licença em
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+A menos que exigido por lei aplicável ou acordado por escrito, o software distribuído sob a Licença é distribuído "NO ESTADO EM QUE SE ENCONTRA", SEM GARANTIAS OU CONDIÇÕES DE QUALQUER TIPO, expressas ou implícitas. Consulte a Licença para o idioma específico que rege permissões e limitações sob a Licença.
