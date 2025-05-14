@@ -93,17 +93,17 @@ F16:: {  ; Y-
 
 ### Software Necessário
 - [Arduino IDE 2.3.6 ou superior](https://www.arduino.cc/en/software)  
+- [AutoHotkey v2.0 ou superior](https://www.autohotkey.com)
 
 ### Bibliotecas do Arduino
 Todas estas bibliotecas estão incluídas por padrão na Arduino IDE:
-- **Wire.h** - Para comunicação I2C com o sensor
-- **Keyboard.h** - Para emulação de teclado
+- **Wire.h** – Para comunicação I2C com o sensor  
+- **Keyboard.h** – Para emulação de teclado
 
 Biblioteca adicional necessária:
 1. [MPU6050_light.h](https://github.com/rfetick/MPU6050_light)  
    Biblioteca específica para o sensor MPU-6050. Instale via:
    - **Gerenciador de Bibliotecas:** (busque por `MPU6050_light`)
-
 ---
 
 ### Guia de Instalação
