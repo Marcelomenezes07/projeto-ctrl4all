@@ -55,22 +55,22 @@ O script AutoHotkey deve ser executado no computador. Substitua os *placeholders
 ```ahk
 #Requires AutoHotkey v2.0
 
-; Click at absolute positions when F13–F16 are pressed
+; Clica em posições absolutas da tela quando F13–F16 são pressionadas
 
 F13:: {  ; X+
-    MouseClick "left", coordX1, coordY1
+    MouseClick("left", coordX1, coordY1)
 }
 
 F14:: {  ; X-
-    MouseClick "left", coordX2, coordY2
+    MouseClick("left", coordX2, coordY2)
 }
 
 F15:: {  ; Y+
-    MouseClick "left", coordX3, coordY3
+    MouseClick("left", coordX3, coordY3)
 }
 
 F16:: {  ; Y-
-    MouseClick "left", coordX4, coordY4
+    MouseClick("left", coordX4, coordY4)
 }
 
 ```
