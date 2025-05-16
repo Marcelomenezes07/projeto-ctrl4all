@@ -1,39 +1,38 @@
-#include <Wire.h>          // Built-in library
-#include <MPU6050_light.h> // From: https://github.com/rfetick/MPU6050_light
-#include <Keyboard.h>      // Built-in library
+#include <Wire.h>          // Biblioteca I2C integrada
+#include <MPU6050_light.h> // Biblioteca do acelerômetro/giroscópio: https://github.com/rfetick/MPU6050_light
+#include <Keyboard.h>      // Biblioteca para simular teclado (Arduino Leonardo ou similar)
 
-MPU6050 mpu(Wire);
+MPU6050 mpu(Wire); // Cria o objeto do sensor MPU usando comunicação I2C
 
-// === CONFIGURABLE VARIABLES ===
-const int updateRate = 50;  // milliseconds between updates
+// === VARIÁVEIS CONFIGURÁVEIS ===
+const int updateRate = 50;  // Tempo entre atualizações (ms)
 
-const float xDeadzone = 20.0;
-const float yDeadzone = 20.0;
+const float xDeadzone = 20.0; // Zona morta para o eixo X (evita pequenos ruídos)
+const float yDeadzone = 20.0; // Zona morta para o eixo Y
 
-bool estadoDEBUG;
-int pinoJumperDEBUG = 8;
+bool estadoDEBUG; // Armazena se o jumper está conectado (ativo) ou não (modo teste/debug)
+int pinoJumperDEBUG = 8; // Pino conectado a um jumper físico para ativar/desativar o modo DEBUG
 
-// Key combinations (you can change these)
-const uint8_t keysXPositive[] = { KEY_LEFT_CTRL, KEY_F13 }; // X+
-const uint8_t keysXNegative[] = { KEY_LEFT_CTRL, KEY_F14 }; // X-
-const uint8_t keysYPositive[] = { KEY_LEFT_CTRL, KEY_F15 }; // Y+
-const uint8_t keysYNegative[] = { KEY_LEFT_CTRL, KEY_F16 }; // Y-
+// Combinações de teclas (modificáveis conforme necessidade)
+const uint8_t keysXPositive[] = { KEY_LEFT_CTRL, KEY_F13 }; // Movimento para frente no eixo X
+const uint8_t keysXNegative[] = { KEY_LEFT_CTRL, KEY_F14 }; // Movimento para trás no eixo X
+const uint8_t keysYPositive[] = { KEY_LEFT_CTRL, KEY_F15 }; // Movimento para cima no eixo Y
+const uint8_t keysYNegative[] = { KEY_LEFT_CTRL, KEY_F16 }; // Movimento para baixo no eixo Y
 
+// Flags para evitar múltiplos pressionamentos da mesma direção
 bool xPosActive = false, xNegActive = false, yPosActive = false, yNegActive = false;
 // ==============================
 
-unsigned long timer = 0;
+unsigned long timer = 0; // Temporizador para controlar frequência de atualização
 
-// Helper function to press multiple keys simultaneously
-// Useful for triggering key combinations like Ctrl+Arrow
+// Função auxiliar para pressionar várias teclas ao mesmo tempo
 void pressCombo(const uint8_t* keys, size_t length) {
   for (size_t i = 0; i < length; i++) {
     Keyboard.press(keys[i]);
   }
 }
 
-// Helper function to release multiple keys simultaneously
-// Complements pressCombo by ensuring all keys in the combo are released
+// Função auxiliar para soltar várias teclas ao mesmo tempo
 void releaseCombo(const uint8_t* keys, size_t length) {
   for (size_t i = 0; i < length; i++) {
     Keyboard.release(keys[i]);
@@ -45,6 +44,7 @@ void setup() {
   Serial.begin(9600);
   Keyboard.begin();
 
+  // Inicializa o sensor e tenta novamente até conseguir conexão
   byte status = mpu.begin();
   while (status != 0) {
     Serial.println("MPU6050 connection failed, retrying...");
@@ -52,29 +52,42 @@ void setup() {
     status = mpu.begin();
   }
 
-  mpu.calcOffsets(); // Calibrate sensor
-  
-  // Uncomment the following line if the MPU6050 is mounted upside down
+  mpu.calcOffsets(); // Calibra o sensor
+
+  // Descomente se o sensor estiver montado de cabeça pra baixo
   // mpu.upsideDownMounting = true;
-  pinMode(pinoJumperDEBUG, INPUT_PULLUP);
+
+  pinMode(pinoJumperDEBUG, INPUT_PULLUP); // Jumper com pull-up interno ativado
 }
 
 void loop() {
   estadoDEBUG = digitalRead(pinoJumperDEBUG);
+
   if (estadoDEBUG == HIGH) {
+    // DEBUG ATIVO — solta todas as teclas e reseta os estados ativos
     releaseCombo(keysXPositive, sizeof(keysXPositive));
-    releaseCombo(keysYPositive, sizeof(keysYPositive));
     releaseCombo(keysXNegative, sizeof(keysXNegative));
-    releaseCombo(keysYNegative, sizeof(keysYPositive));
+    releaseCombo(keysYPositive, sizeof(keysYPositive));
+    releaseCombo(keysYNegative, sizeof(keysYNegative));
+
+    xPosActive = false;
+    xNegActive = false;
+    yPosActive = false;
+    yNegActive = false;
   }
+
   if (estadoDEBUG == LOW) {
     mpu.update();
+
+    // Só executa após o tempo de atualização definido
     if ((millis() - timer) > updateRate) {
       float x = mpu.getAngleX();
       float y = mpu.getAngleY();
 
-      // X+
-      if (x > xDeadzone && !xPosActive) {
+      // --- DETECÇÃO EIXO X ---
+      if (x > xDeadzone && !xPosActive) { // X+
+        // sizeof(keysXPositive) funciona aqui pois cada tecla tem 1 byte (uint8_t)
+        // Em vetores de tipos maiores, use: sizeof(keysXPositive) / sizeof(keysXPositive[0])
         pressCombo(keysXPositive, sizeof(keysXPositive));
         xPosActive = true;
       } else if (x <= xDeadzone && xPosActive) {
@@ -82,8 +95,7 @@ void loop() {
         xPosActive = false;
       }
 
-      // X-
-      if (x < -xDeadzone && !xNegActive) {
+      if (x < -xDeadzone && !xNegActive) { // X-
         pressCombo(keysXNegative, sizeof(keysXNegative));
         xNegActive = true;
       } else if (x >= -xDeadzone && xNegActive) {
@@ -91,8 +103,8 @@ void loop() {
         xNegActive = false;
       }
 
-      // Y+
-      if (y > yDeadzone && !yPosActive) {
+      // --- DETECÇÃO EIXO Y ---
+      if (y > yDeadzone && !yPosActive) { // Y+
         pressCombo(keysYPositive, sizeof(keysYPositive));
         yPosActive = true;
       } else if (y <= yDeadzone && yPosActive) {
@@ -100,8 +112,7 @@ void loop() {
         yPosActive = false;
       }
 
-      // Y-
-      if (y < -yDeadzone && !yNegActive) {
+      if (y < -yDeadzone && !yNegActive) { // Y-
         pressCombo(keysYNegative, sizeof(keysYNegative));
         yNegActive = true;
       } else if (y >= -yDeadzone && yNegActive) {
@@ -109,7 +120,7 @@ void loop() {
         yNegActive = false;
       }
 
-      timer = millis();
+      timer = millis(); // Atualiza temporizador
     }
   }
 }
