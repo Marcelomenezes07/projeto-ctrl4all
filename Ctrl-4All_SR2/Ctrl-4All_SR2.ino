@@ -7,8 +7,8 @@ MPU6050 mpu(Wire); // Cria o objeto do sensor MPU usando comunicação I2C
 // === VARIÁVEIS CONFIGURÁVEIS ===
 const int updateRate = 50;  // Tempo entre atualizações (ms)
 
-const float xDeadzone = 20.0; // Zona morta para o eixo X (evita pequenos ruídos)
-const float yDeadzone = 20.0; // Zona morta para o eixo Y
+const float xDeadzone = 40.0; // Zona morta para o eixo X (evita pequenos ruídos)
+const float yDeadzone = 40.0; // Zona morta para o eixo Y
 
 bool estadoDEBUG; // Armazena se o jumper está conectado (ativo) ou não (modo teste/debug)
 int pinoJumperDEBUG = 8; // Pino conectado a um jumper físico para ativar/desativar o modo DEBUG
