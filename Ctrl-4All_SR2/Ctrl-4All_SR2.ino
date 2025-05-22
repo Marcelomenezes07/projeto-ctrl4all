@@ -92,7 +92,6 @@ void loop() {
         xPosActive = true;
 	releaseCombo(keysXPositive, sizeof(keysXPositive));
       } else if (x <= xDeadzone && xPosActive) {
-        releaseCombo(keysXPositive, sizeof(keysXPositive));
         xPosActive = false;
       }
 
@@ -108,7 +107,7 @@ void loop() {
       if (y > yDeadzone && !yPosActive) { // Y+
         pressCombo(keysYPositive, sizeof(keysYPositive));
         yPosActive = true;
-	releaseCombo(keysXNegative, sizeof(keysXNegative));
+	releaseCombo(keysYPositive, sizeof(keysYPositive));
       } else if (y <= yDeadzone && yPosActive) {
         yPosActive = false;
       }
@@ -116,7 +115,7 @@ void loop() {
       if (y < -yDeadzone && !yNegActive) { // Y-
         pressCombo(keysYNegative, sizeof(keysYNegative));
         yNegActive = true;
-	releaseCombo(keysXNegative, sizeof(keysXNegative));
+	releaseCombo(keysYNegative, sizeof(keysYNegative));
       } else if (y >= -yDeadzone && yNegActive) {
         yNegActive = false;
       }
