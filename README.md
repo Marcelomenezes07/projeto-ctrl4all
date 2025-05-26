@@ -46,11 +46,12 @@ O código fornecido deve ser carregado no Arduino Pro Micro 5V. Certifique-se de
 - Calibrar a posição neutra do sensor durante a inicialização.
 - Ajustar as zonas mortas (`xDeadzone` e `yDeadzone`) conforme necessário para evitar detecções acidentais.
 
-### 2. Script AutoHotkey
+## 2. Script AutoHotkey
 
+Para telas de **1920x1080p**, providenciamos um [Script de exemplo](https://github.com/usuario/repositorio/blob/main/projeto-ctrl4all/Script%20de%20exemplo.ahk):
 O script AutoHotkey deve ser executado no computador. Substitua os *placeholders* (`coordX1`, `coordY1`, etc.) pelas coordenadas reais da tela onde estão as opções de resposta do Kahoot.
 
-#### Exemplo:
+### Exemplo:
 
 ```ahk
 #Requires AutoHotkey v2.0
@@ -73,7 +74,6 @@ O script AutoHotkey deve ser executado no computador. Substitua os *placeholders
     MouseClick("left", coordX4, coordY4)
 }
 
-```
 
 ---
 
