@@ -73,7 +73,7 @@ O script AutoHotkey deve ser executado no computador. Substitua os *placeholders
 ^F16:: {  ; Y-
     MouseClick("left", coordX4, coordY4)
 }
-
+```
 
 ---
 
