@@ -48,7 +48,7 @@ O código fornecido deve ser carregado no Arduino Pro Micro 5V. Certifique-se de
 
 ## 2. Script AutoHotkey
 
-Para telas de **1920x1080p**, providenciamos um [Script de exemplo](https://github.com/usuario/repositorio/blob/main/projeto-ctrl4all/Script%20de%20exemplo.ahk):
+Para telas de **1920x1080p**, providenciamos um [Script de exemplo](https://github.com/Marcelomenezes07/projeto-ctrl4all/blob/main/Script%20de%20exemplo.ahk):
 O script AutoHotkey deve ser executado no computador. Substitua os *placeholders* (`coordX1`, `coordY1`, etc.) pelas coordenadas reais da tela onde estão as opções de resposta do Kahoot.
 
 ### Exemplo:
