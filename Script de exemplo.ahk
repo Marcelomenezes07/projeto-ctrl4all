@@ -1,5 +1,7 @@
 ﻿#Requires AutoHotkey v2.0
 
+CoordMode("Mouse", "Screen")  ; Garante que as coordenadas são absolutas da tela
+
 ; Clica em posições absolutas da tela quando F13–F16 são pressionadas
 
 ^F13:: {  ; X+ (Botão azul)
