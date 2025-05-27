@@ -14,10 +14,11 @@ bool estadoDEBUG; // Armazena se o jumper está conectado (ativo) ou não (modo 
 int pinoJumperDEBUG = 8; // Pino conectado a um jumper físico para ativar/desativar o modo DEBUG
 
 // Combinações de teclas (modificáveis conforme necessidade)
-const uint8_t keysXPositive[] = { KEY_LEFT_CTRL, KEY_F13 }; // Movimento para frente no eixo X
-const uint8_t keysXNegative[] = { KEY_LEFT_CTRL, KEY_F14 }; // Movimento para trás no eixo X
-const uint8_t keysYPositive[] = { KEY_LEFT_CTRL, KEY_F15 }; // Movimento para cima no eixo Y
-const uint8_t keysYNegative[] = { KEY_LEFT_CTRL, KEY_F16 }; // Movimento para baixo no eixo Y
+// Combinações de teclas (movimentos):
+const uint8_t keysXPositive[] = { 'X', '+' }; // "X+"
+const uint8_t keysXNegative[] = { 'X', '-' }; // "X-"
+const uint8_t keysYPositive[] = { 'Y', '+' }; // "Y+"
+const uint8_t keysYNegative[] = { 'Y', '-' }; // "Y-"
 
 // Flags para evitar múltiplos pressionamentos da mesma direção
 bool xPosActive = false, xNegActive = false, yPosActive = false, yNegActive = false;
