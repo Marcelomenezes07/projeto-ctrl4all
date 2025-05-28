@@ -7,21 +7,18 @@ MPU6050 mpu(Wire); // Cria o objeto do sensor MPU usando comunicação I2C
 // === VARIÁVEIS CONFIGURÁVEIS ===
 const int updateRate = 50;  // Tempo entre atualizações (ms)
 
-const float xDeadzone = 40.0; // Zona morta para o eixo X (evita pequenos ruídos)
-const float yDeadzone = 40.0; // Zona morta para o eixo Y
+const float xDeadzone = 25.0; // Zona morta para o eixo X (evita pequenos ruídos)
 
 bool estadoDEBUG; // Armazena se o jumper está conectado (ativo) ou não (modo teste/debug)
 int pinoJumperDEBUG = 8; // Pino conectado a um jumper físico para ativar/desativar o modo DEBUG
 
 // Combinações de teclas (modificáveis conforme necessidade)
 // Combinações de teclas (movimentos):
-const uint8_t keysXPositive[] = { 'X', '+' }; // "X+"
-const uint8_t keysXNegative[] = { 'X', '-' }; // "X-"
-const uint8_t keysYPositive[] = { 'Y', '+' }; // "Y+"
-const uint8_t keysYNegative[] = { 'Y', '-' }; // "Y-"
+const uint8_t keysXPositive[] = {KEY_LEFT_ARROW}; // "X+"
+const uint8_t keysXNegative[] = {KEY_RIGHT_ARROW}; // "X-"
 
 // Flags para evitar múltiplos pressionamentos da mesma direção
-bool xPosActive = false, xNegActive = false, yPosActive = false, yNegActive = false;
+bool xPosActive = false, xNegActive;
 // ==============================
 
 unsigned long timer = 0; // Temporizador para controlar frequência de atualização
@@ -68,13 +65,9 @@ void loop() {
     // DEBUG ATIVO — solta todas as teclas e reseta os estados ativos
     releaseCombo(keysXPositive, sizeof(keysXPositive));
     releaseCombo(keysXNegative, sizeof(keysXNegative));
-    releaseCombo(keysYPositive, sizeof(keysYPositive));
-    releaseCombo(keysYNegative, sizeof(keysYNegative));
 
     xPosActive = false;
     xNegActive = false;
-    yPosActive = false;
-    yNegActive = false;
   }
 
   if (estadoDEBUG == LOW) {
@@ -83,7 +76,6 @@ void loop() {
     // Só executa após o tempo de atualização definido
     if ((millis() - timer) > updateRate) {
       float x = mpu.getAngleX();
-      float y = mpu.getAngleY();
 
       // --- DETECÇÃO EIXO X ---
       if (x > xDeadzone && !xPosActive) { // X+
@@ -102,23 +94,6 @@ void loop() {
 	releaseCombo(keysXNegative, sizeof(keysXNegative));
       } else if (x >= -xDeadzone && xNegActive) {
         xNegActive = false;
-      }
-
-      // --- DETECÇÃO EIXO Y ---
-      if (y > yDeadzone && !yPosActive) { // Y+
-        pressCombo(keysYPositive, sizeof(keysYPositive));
-        yPosActive = true;
-	releaseCombo(keysYPositive, sizeof(keysYPositive));
-      } else if (y <= yDeadzone && yPosActive) {
-        yPosActive = false;
-      }
-
-      if (y < -yDeadzone && !yNegActive) { // Y-
-        pressCombo(keysYNegative, sizeof(keysYNegative));
-        yNegActive = true;
-	releaseCombo(keysYNegative, sizeof(keysYNegative));
-      } else if (y >= -yDeadzone && yNegActive) {
-        yNegActive = false;
       }
 
       timer = millis(); // Atualiza temporizador
