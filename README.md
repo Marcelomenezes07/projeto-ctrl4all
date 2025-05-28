@@ -40,7 +40,9 @@ Este projeto visa melhorar a acessibilidade de pessoas com deficiência motora e
 
 ### 1. Código Arduino
 
-O código fornecido deve ser carregado no Arduino Pro Micro 5V. Certifique-se de:
+O **código definitivo** deste projeto está disponível em [Ctrl-4All/Ctrl-4All.ino](https://github.com/Marcelomenezes07/projeto-ctrl4all/blob/main/Ctrl-4All/Ctrl-4All.ino).
+
+Esse código deve ser carregado no Arduino Pro Micro 5V. Certifique-se de:
 
 - Conectar o sensor MPU-6050 corretamente ao Arduino.
 - Calibrar a posição neutra do sensor durante a inicialização.
