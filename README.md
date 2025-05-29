@@ -5,6 +5,12 @@
 
 Este projeto visa melhorar a acessibilidade de pessoas com deficiência motora em jogos educativos como o Kahoot. O sistema consiste em um controle adaptado que detecta movimentos da cabeça (inclinações) e os traduz em comandos de teclado, simulando cliques em posições específicas da tela. O dispositivo é composto por um sensor MPU-6050 acoplado a uma tiara com um Arduino Pro Micro 5V, que se comunica com um computador para executar ações pré-definidas.
 
+<br>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9fa27836-5d60-41dc-9a04-8c6fc80c7728" width="450">
+</p>
+
 ---
 
 ## Componentes Necessários
